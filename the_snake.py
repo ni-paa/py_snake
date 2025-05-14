@@ -1,14 +1,16 @@
-"""Модуль the_snake.py реализует игру 'Змейка' с использованием библиотеки pg.
+"""Классическая игра Змейка.
+
+Модуль the_snake.py реализует игру 'Змейка' с использованием библиотеки pg.
 Игра включает основные элементы управления змейкой, отображение игрового поля,
 счетчик очков и обработку столкновений.
 Использование: Для запуска игры выполните этот файл python.
 Особенности реализации:
 *Управление змейкой осуществляется клавишами стрелок вверх-вниз-влево-вправо.
 *Игровое поле ограничено рамками экрана.
-*Если змея сталкивается сама с собой или с границами окна — игра заканчивается.
+*Если змея сталкивается сама с собой — игра заканчивается.
 *После каждого съеденного яблока длина змеи увеличивается.
 Автор: MbIcJIu
-Версия: 1.0.
+Версия: 0.2.
 """
 from random import randint
 
@@ -41,7 +43,7 @@ SPEED = 5
 # Настройка игрового окна:
 screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 clock = pg.time.Clock()  # Настройка времени для управления FPS
-pg.display.set_caption('Змейка (v.0.1)')  # Заголовок окна
+pg.display.set_caption('Змейка (v.0.2)')  # Заголовок окна
 
 
 class GameObject:
@@ -53,8 +55,7 @@ class GameObject:
         self.body_color = None
 
     def draw(self):
-        """Докстринг-затычка для прохождения теста"""
-        pass
+        """Докстринг-затычка, для прохождения теста."""
 
 
 class Apple(GameObject):
@@ -118,16 +119,10 @@ class Snake(GameObject):
             self.last = None
 
     def draw(self):
-        """Отрисовывает змейку."""
-        rect = pg.Rect(self.get_head_position(), (GRID_SIZE, GRID_SIZE))
-        pg.draw.rect(screen, self.body_color, rect)
-        pg.draw.rect(screen, BORDER_COLOR, rect, 1)
-
-        # Отрисовка головы змейки
+        """Отрисовываем змейку."""
         head_rect = pg.Rect(self.get_head_position(), (GRID_SIZE, GRID_SIZE))
         pg.draw.rect(screen, self.body_color, head_rect)
         pg.draw.rect(screen, BORDER_COLOR, head_rect, 1)
-
         # Затирание последнего сегмента
         if self.last:
             last_rect = pg.Rect(self.last, (GRID_SIZE, GRID_SIZE))
